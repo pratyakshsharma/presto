@@ -14,7 +14,7 @@
 set -e
 set -x
 
-export FB_OS_VERSION=v2022.11.14.00
+export FB_OS_VERSION=v2023.12.04.00
 export RE2_VERSION=2021-04-01
 export nproc=$(getconf _NPROCESSORS_ONLN)
 
@@ -26,9 +26,6 @@ dnf install -y jq
 dnf install -y perl-XML-XPath
 
 python3 -m pip install regex pyyaml chevron black six
-
-# Required for Antlr4
-dnf install -y libuuid-devel
 
 export CC=/opt/rh/gcc-toolset-9/root/bin/gcc
 export CXX=/opt/rh/gcc-toolset-9/root/bin/g++
