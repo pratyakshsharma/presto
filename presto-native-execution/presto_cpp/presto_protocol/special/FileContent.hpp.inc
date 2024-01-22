@@ -12,24 +12,10 @@
  * limitations under the License.
  */
 
-// dependency BaseHiveColumnHandle
-
 namespace facebook::presto::protocol {
+enum class FileContent { DATA, POSITION_DELETES, EQUALITY_DELETES };
 
-struct HiveColumnHandle : public BaseHiveColumnHandle {
-  HiveType hiveType = {};
-  TypeSignature typeSignature = {};
-  int hiveColumnIndex = {};
-  std::shared_ptr<Aggregation> partialAggregation = {};
-
-  HiveColumnHandle() noexcept;
-
-  bool operator<(const ColumnHandle& o) const override {
-    return name < dynamic_cast<const HiveColumnHandle&>(o).name;
-  }
-};
-
-void to_json(json& j, const HiveColumnHandle& p);
-void from_json(const json& j, HiveColumnHandle& p);
+void to_json(json& j, const FileContent& p);
+void from_json(const json& j, FileContent& p);
 
 } // namespace facebook::presto::protocol

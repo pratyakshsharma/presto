@@ -11,25 +11,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-// dependency BaseHiveColumnHandle
-
 namespace facebook::presto::protocol {
 
-struct HiveColumnHandle : public BaseHiveColumnHandle {
-  HiveType hiveType = {};
-  TypeSignature typeSignature = {};
-  int hiveColumnIndex = {};
-  std::shared_ptr<Aggregation> partialAggregation = {};
-
-  HiveColumnHandle() noexcept;
+struct BaseHiveColumnHandle : public ColumnHandle {
+  String name = {};
+  std::shared_ptr<String> comment = {};
+  ColumnType columnType = {};
+  List<Subfield> requiredSubfields = {};
 
   bool operator<(const ColumnHandle& o) const override {
-    return name < dynamic_cast<const HiveColumnHandle&>(o).name;
+    return name < dynamic_cast<const BaseHiveColumnHandle&>(o).name;
   }
 };
 
-void to_json(json& j, const HiveColumnHandle& p);
-void from_json(const json& j, HiveColumnHandle& p);
+void to_json(json& j, const BaseHiveColumnHandle& p);
+void from_json(const json& j, BaseHiveColumnHandle& p);
 
 } // namespace facebook::presto::protocol

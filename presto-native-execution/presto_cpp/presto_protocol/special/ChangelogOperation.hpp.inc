@@ -12,24 +12,10 @@
  * limitations under the License.
  */
 
-// dependency BaseHiveColumnHandle
-
 namespace facebook::presto::protocol {
+enum class ChangelogOperation { INSERT, DELETE, UPDATE_BEFORE, UPDATE_AFTER };
 
-struct HiveColumnHandle : public BaseHiveColumnHandle {
-  HiveType hiveType = {};
-  TypeSignature typeSignature = {};
-  int hiveColumnIndex = {};
-  std::shared_ptr<Aggregation> partialAggregation = {};
-
-  HiveColumnHandle() noexcept;
-
-  bool operator<(const ColumnHandle& o) const override {
-    return name < dynamic_cast<const HiveColumnHandle&>(o).name;
-  }
-};
-
-void to_json(json& j, const HiveColumnHandle& p);
-void from_json(const json& j, HiveColumnHandle& p);
+void to_json(json& j, const ChangelogOperation& p);
+void from_json(const json& j, ChangelogOperation& p);
 
 } // namespace facebook::presto::protocol
