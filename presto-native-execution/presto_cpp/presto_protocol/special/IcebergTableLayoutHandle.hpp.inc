@@ -12,24 +12,21 @@
  * limitations under the License.
  */
 
-// dependency BaseHiveColumnHandle
+// dependency BaseHiveTableLayoutHandle
 
 namespace facebook::presto::protocol {
 
-struct HiveColumnHandle : public BaseHiveColumnHandle {
-  HiveType hiveType = {};
-  TypeSignature typeSignature = {};
-  int hiveColumnIndex = {};
-  std::shared_ptr<Aggregation> partialAggregation = {};
+struct IcebergTableLayoutHandle : public BaseHiveTableLayoutHandle {
+  List<IcebergColumnHandle> partitionColumns = {};
+  List<Column> dataColumns = {};
+  Map<String, IcebergColumnHandle> predicateColumns = {};
+  std::shared_ptr<List<IcebergColumnHandle>> requestedColumns = {};
+  IcebergTableHandle table = {};
 
-  HiveColumnHandle() noexcept;
-
-  bool operator<(const ColumnHandle& o) const override {
-    return name < dynamic_cast<const HiveColumnHandle&>(o).name;
-  }
+  IcebergTableLayoutHandle() noexcept;
 };
 
-void to_json(json& j, const HiveColumnHandle& p);
-void from_json(const json& j, HiveColumnHandle& p);
+void to_json(json& j, const IcebergTableLayoutHandle& p);
+void from_json(const json& j, IcebergTableLayoutHandle& p);
 
 } // namespace facebook::presto::protocol
